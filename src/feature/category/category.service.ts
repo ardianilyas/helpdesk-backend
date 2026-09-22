@@ -12,6 +12,7 @@ export class CategoryService {
   async getCategory(id: string) {
     const category = await this.categoryRepository.getCategory(id);
     if (!category) throw new NotFoundError("Category not found");
+    return category;
   }
 
   async createCategory(data: CreateCategoryDto) {

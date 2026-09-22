@@ -22,7 +22,7 @@ export class CategoryController {
   createCategory = asyncHandler(async (req: Request, res: Response) => {
     const data = validate(createCategoryDto, req.body);
     const category = await this.categoryService.createCategory(data);
-    return sendSuccess(res, "Category created successfully", category);
+    return sendSuccess(res, "Category created successfully", category, 201);
   });
 
   updateCategory = asyncHandler(async (req: Request, res: Response) => {
