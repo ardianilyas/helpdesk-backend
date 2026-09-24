@@ -1,6 +1,6 @@
 import { afterAll } from "vitest";
-import { clearDb } from "./helpers/clear-db";
+import { pool } from "@/shared/db";
 
 afterAll(async () => {
-  await clearDb();
+  await pool.end();
 });

@@ -16,8 +16,10 @@ app.use("/api", apiRoute);
 
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.log(`Listening on http://localhost:${PORT}`);
-});
+if (process.env.NODE_ENV !== "test") {
+  app.listen(PORT, () => {
+    console.log(`Listening on http://localhost:${PORT}`);
+  });
+}
 
 export default app;
