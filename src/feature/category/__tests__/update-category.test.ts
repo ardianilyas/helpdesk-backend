@@ -6,6 +6,7 @@ import type { UpdateCategoryDto } from "../category.dto";
 import app from "@/server";
 import { ERROR_MESSAGE } from "@/shared/constants/error-message.constant";
 import { INVALID_UUID } from "@/shared/constants/test.constant";
+import { createTestCategory } from "./helpers/create-test-category";
 
 describe("Update Category", () => {
   let user: ReturnType<typeof request.agent>;
@@ -20,10 +21,8 @@ describe("Update Category", () => {
     payload = {
       name: "Test Category - updated",
     }
-
-    const category = await seedCategory(1);
-    if (!category) throw new Error("Failed to create category");
-    categoryId = category[0]?.id!;
+    
+    categoryId = await createTestCategory();
 
     user = userAgent;
     admin = adminAgent;
