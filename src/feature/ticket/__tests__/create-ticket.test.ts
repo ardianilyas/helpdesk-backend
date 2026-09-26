@@ -49,14 +49,14 @@ describe("Create Ticket", () => {
     expect(res.body.errors[0].message).toBe("Title is required");
   });
 
-  it('should return 200 when ticket created', async () => {
+  it('should return 201 when ticket created', async () => {
     const res = await user.post(`/api/tickets`).send({
       title: "Test Ticket",
       description: "This is a test ticket",
       categoryId,
     });
 
-    expect(res.status).toBe(200);
+    expect(res.status).toBe(201);
     expect(res.body.data).toBeDefined();
   });
 });
