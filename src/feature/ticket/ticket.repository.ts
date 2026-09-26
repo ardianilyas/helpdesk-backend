@@ -1,5 +1,5 @@
 import { db } from "@/shared/db";
-import { categories, tickets } from "@/shared/db/schemas";
+import { categories, tickets, type TicketStatus } from "@/shared/db/schemas";
 import { eq } from "drizzle-orm";
 import type { CreateTicketDto, Ticket, UpdateTicketDto } from "./ticket.dto";
 import type { Category } from "../category/category.dto";
@@ -39,6 +39,12 @@ export class TicketRepository {
 
   async updateTicket(data: UpdateTicketDto, id: string): Promise<Ticket | undefined> {
     const [ticket] = await db.update(tickets).set(data).where(eq(tickets.id, id)).returning();
+
+    return ticket;
+  }
+
+  async updateTicketStatus(status: TicketStatus, id: string): Promise<Ticket | undefined> {
+    const [ticket] = await db.update(tickets).set({ ticketStatus: status }).where(eq(tickets.id, id)).returning();
 
     return ticket;
   }

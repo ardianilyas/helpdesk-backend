@@ -2,6 +2,7 @@ import { NotFoundError } from "@/shared/errors/not-found";
 import type { CreateTicketDto, Ticket, UpdateTicketDto } from "./ticket.dto";
 import type { TicketRepository } from "./ticket.repository";
 import { BadRequestError } from "@/shared/errors/bad-request";
+import type { TicketStatus } from "@/shared/db/schemas";
 
 export class TicketService {
   constructor(private readonly ticketRepository: TicketRepository) {}
@@ -38,7 +39,17 @@ export class TicketService {
     return ticket;
   }
 
-  async deleteTicket(id: string): Promise<Ticket | undefined> {
-    return this.ticketRepository.deleteTicket(id);
+  async updateTicketStatus(status: TicketStatus, id: string): Promise<Ticket | undefined> {
+    const ticket = await this.ticketRepository.updateTicketStatus(status, id);
+    
+    if(!ticket) throw new NotFoundError("Ticket not found");
+    
+    return ticket;
+  }
+
+  async deleteTicket(id: string): Promise<void> {
+    const ticket = await this.ticketRepository.deleteTicket(id);
+    
+    if(!ticket) throw new NotFoundError("Ticket not found");
   }
 }

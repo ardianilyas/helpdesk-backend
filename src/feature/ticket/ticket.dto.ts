@@ -1,4 +1,4 @@
-import { ticketPriorityEnum, tickets } from "@/shared/db/schemas";
+import { ticketPriorityEnum, tickets, ticketStatusEnum } from "@/shared/db/schemas";
 import z from "zod";
 
 export type Ticket = typeof tickets.$inferSelect;
@@ -10,6 +10,9 @@ export const createTicketDto = z.object({
   ticketPriority: z.enum(ticketPriorityEnum.enumValues, { error: "Invalid ticket priority" }).optional(),
 });
 
+export const updateTicketStatusDto = z.object({
+  status: z.enum(ticketStatusEnum.enumValues, { error: "Invalid ticket status" })
+});
 export const updateTicketDto = createTicketDto.partial();
 export const getTicketDto = z.uuid({ error: "Invalid id format" });
 
