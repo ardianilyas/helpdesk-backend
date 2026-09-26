@@ -4,11 +4,17 @@ import { auth } from "./shared/lib/auth";
 import { errorHandler } from "./shared/middlewares/error-handler";
 import { env } from "./shared/config/env";
 import apiRoute from "./shared/routes";
+import cors from "cors";
 
 const app = express();
 const PORT = env.PORT;
 
 app.all("/api/auth/*splat", toNodeHandler(auth));
+
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true
+}));
 
 app.use(express.json());
 
